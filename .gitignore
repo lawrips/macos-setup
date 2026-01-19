@@ -1,0 +1,31 @@
+# Secrets - never commit
+.env
+.env.*
+*.pem
+*.key
+credentials.json
+secrets.json
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Editor
+*.swp
+*.swo
+*~
+.idea/
+.vscode/
+
+# Claude Code local settings
+.claude/
+
+# Tickets (personal task tracking)
+.tickets/
+
+# Personal install log
+install-log.md
+
+# Local overrides
+*.local
