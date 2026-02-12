@@ -116,7 +116,8 @@ check_pending_updates() {
     echo "$updates" | while read -r update; do
       echo "   - $update"
     done
-    echo "   Run: sudo fdesetup authrestart && softwareupdate -i -a"
+    echo "   Run: sudo softwareupdate -i -a && sudo fdesetup authrestart"
+    echo "   Note: This only works for minor updates/patches. Major OS upgrades require a different workflow (WIP)."
     echo ""
   fi
 }
