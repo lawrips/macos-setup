@@ -116,8 +116,7 @@ check_pending_updates() {
     echo "$updates" | while read -r update; do
       echo "   - $update"
     done
-    echo "   Run: sudo softwareupdate -i -a && sudo fdesetup authrestart"
-    echo "   Note: This only works for minor updates/patches. Major OS upgrades require a different workflow (WIP)."
+    echo "   Run: <path-to-repo>/update-os.sh (patches) or upgrade-os.sh (major releases)"
     echo ""
   fi
 }
@@ -236,16 +235,34 @@ See full CLAUDE.md in this repo for reference.
 
 ---
 
-### 16. Manual Update Workflow
+### 16. macOS Updates
+
+**For patches and security updates** — uses `softwareupdate -i`:
 ```bash
-# Check for updates
+./update-os.sh
+```
+
+**For major OS upgrades** (e.g. Sequoia → Tahoe) — downloads the full installer and runs `startosinstall`:
+```bash
+./upgrade-os.sh
+```
+
+Both scripts are menu-driven with confirmation prompts. V limited testing and expected to change so use at your own risk.
+
+Note: `softwareupdate -i` silently does nothing for major upgrades — use `upgrade-os.sh` if a patch-level update doesn't seem to apply.
+
+**General instructions for manual workflow** (i.e. by hand):
+```bash
+# Patches: check, install, restart
 softwareupdate -l
-
-# Download specific update
-sudo softwareupdate --download "UPDATE_LABEL"
-
-# Reboot with FileVault bypass
+sudo softwareupdate -i "LABEL"
 sudo fdesetup authrestart
+
+# Major upgrades: download installer, run it
+softwareupdate --list-full-installers
+sudo softwareupdate --fetch-full-installer --full-installer-version X.Y
+sudo /Applications/Install\ macOS\ *.app/Contents/Resources/startosinstall \
+  --agreetolicense --forcequitapps --nointeraction --passprompt
 ```
 
 ---
